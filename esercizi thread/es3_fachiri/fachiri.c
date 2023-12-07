@@ -22,10 +22,10 @@ Iniziate l'esercizio scrivendo il Makefile.
 
 const int SWORDS_COUNT = 10;
 
-pthread_mutex_t mutex[SWORDS_COUNT];
-pthread_cond_t cond[SWORDS_COUNT];
+pthread_mutex_t mutex[10];
+pthread_cond_t cond[10];
 
-int SWORDS[SWORDS_COUNT];
+int SWORDS[10];
 
 void* fachiro(void* arg){
     int i = 0;
