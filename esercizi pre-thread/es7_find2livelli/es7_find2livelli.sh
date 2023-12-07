@@ -1,0 +1,1 @@
+sudo find /usr -type f -name "*i.h" -maxdepth 3

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+FATTORIALE=1
+COUNT=0
+
+for (( COUNT=$1; COUNT>0; COUNT=${COUNT}-1 )) ; do
+	(( FATTORIALE=${FATTORIALE}*COUNT )) ;
+done
+
+echo $FATTORIALE

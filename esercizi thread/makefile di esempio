@@ -1,0 +1,27 @@
+# qui ci sta tutta la roba che devo fare per fare un makefile fatto per il verso
+
+# è utile usare variabili stile bash
+CFLAGS=-ansi -Wpedantic -Wall -D_THREAD_SAFE -D_REENTRANT -D_POSIX_C_SOURCE=200112L # flag di compilazione
+LFLAGS=
+LIBRARIES=-lpthread # libreria per i thread
+
+# la prima label è dove parte a compilare, la chiamo sempre "all"
+
+all: ciao.exe # quind indico anche le dipendenze di cui quei comandi hanno bisogno
+
+ciao.exe: ciao.o
+	gcc -o ciao.exe ciao.o ${LIBRARIES}
+# linko dandogli le librerie che ho già e tutti gli oggetti che servono
+
+ciao.o: ciao.c 
+	gcc ${CFLAGS} -c ciao.c
+# gli do prima i flag e poi -c per compilare 
+
+# sempre fare la sezione .PHONY indicando le label che non sono file da cercare, come all e clean
+
+.PHONY: all, clean
+
+# sempre fare la sezione clean che cancella tutti i file generati dal compilatore e dal linker
+
+clean: 
+	rm ciao.o ciao.exe

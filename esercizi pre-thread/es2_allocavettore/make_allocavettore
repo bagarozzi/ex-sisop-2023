@@ -1,0 +1,15 @@
+CFLAGS=-ansi -Wpedantic -Wall -Werror
+LIBRARIES=-lm
+
+all:    es2_allocavettore.exe
+
+es2_allocavettore.exe:  es2_allocavettore.o
+    gcc -o es2_allocavettore.exe es2_allocavettore.o
+
+es2_allocavettore.o:    es2_allocavettore.c macrodi_es2_allocavettore.h
+    gcc -c ${CFLAGS} es2_allocavettore.c
+
+.PHONY clean
+
+clean:
+    rm -f es2_allocavettore.o es2_allocavettore.exe *~ core
