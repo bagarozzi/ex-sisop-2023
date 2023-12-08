@@ -23,45 +23,55 @@ Iniziate l'esercizio scrivendo il Makefile.
 const int SWORDS_COUNT = 10;
 
 pthread_mutex_t mutex[10];
-pthread_cond_t cond[10];
-
-int SWORDS[10];
 
 void* fachiro(void* arg){
-    int i = 0;
+    int i = 0, rc;
     while (1) {
         /* prendo possesso delle spade */
         for(i = 0; i < SWORDS_COUNT; i++) {
-            pthread_mutex_lock(&mutex[i]);
-            if(SWORDS[i] == 0){
-                pthread_cond_wait(&cond[i], &mutex[i]);
+            rc = pthread_mutex_lock(&(mutex[i]));
+            if( rc ){
+                printf("There was a problem with mutex_lock");
+                exit(1);
             }
         }
 
         /* sezione critica: trafiggersi e poi rimettere a posto la spada */
         for(i = 0; i < SWORDS_COUNT; i++){
-            printf("AHH %d", i);
-            SWORDS[i] = 1;
-            pthread_cond_signal(&cond[i]);
+            printf("Thread %" PRIuPTR ": AHH %d", (uintptr_t)arg, i);
             sleep(700);
         }
         printf("Ho finito, metto a posto");
         /* fine sezione critica, libero le spade */
-        for(i = 0; i < SWORDS_COUNT; i++) pthread_mutex_unlock(&mutex[i]);
+        for(i = 0; i < SWORDS_COUNT; i++){
+            rc = pthread_mutex_unlock(&(mutex[i]));
+            if( rc ) {
+                printf("There was a problem with mutex_unlock");
+                exit(1);
+            }
+        }
     }
+    pthread_exit(NULL);
 }
 
 int main(void){
-    int i;
-    intptr_t arg = 0;
+    int i, rc;
+    uintptr_t arg = 1;
     pthread_t tid;
+    char msg[100];
 
     for(i = 0; i < SWORDS_COUNT; i++){
-        pthread_mutex_init(&mutex[i], NULL);
-        pthread_cond_init(&cond[i], NULL);
-        SWORDS[i] = 1; /* tutte le spade sono nel sacco */
+        pthread_mutex_init(&(mutex[i]), NULL);
     }
-
-    pthread_create(&tid, NULL, fachiro,(void*)arg); /* Creo i due fachiri */
-    pthread_create(&tid, NULL, fachiro, (void*)arg);
+    for(i = 1; i <= 2; i++){
+        arg = i;
+        rc = pthread_create(&tid, NULL, fachiro,(void*)arg); 
+        if( rc ){
+            strerror_r(rc, msg, 100);
+            printf("There was a problem creating the thread : %s", msg);
+            exit(1);
+        }
+    }
+    pthread_exit(NULL);
+    return 0;
 }
