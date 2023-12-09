@@ -1,0 +1,123 @@
+
+<HTML>
+
+<HEAD> <TITLE>  INTRODUZIONE AI SISTEMI OPERATIVI </TITLE> </HEAD>
+<!--
+<BODY TEXT="#000000" BGCOLOR="#F9E1A4" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000" BACKGROUND="HTML/back.gif">
+<BODY TEXT="#000000" BGCOLOR="#F0B0C0" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000" BACKGROUND="HTML/back.gif">
+-->
+
+<H3><I><B>3. Introduzione ai Sistemi Operativi.</B></I></H3>
+ <B> Riferimento: </B> Capitolo 1 "Introduzione" del libro di testo. <BR>
+<BR>
+
+<B> I Servizi dei sistemi operativi </B> <BR>
+
+<A HREF = "3_introSistemaOperativo.pdf"> 3_introSistemaOperativo.pdf </A> (Traccia delle lezioni) <BR>
+<BR>
+
+
+<B> Formato ELF dell'eseguibile, Entry Point Address, Linking con librerie di default del gcc, Chiamata di Interrupt software, Chiamata di system call </B> 
+<BR>
+
+<A HREF = "EntryPoint_Linking_Syscall.pdf">EntryPoint_Linking_Syscall.pdf</A> (dispense delle lezioni)
+<BR>
+<BR>
+
+
+<H3><I><B>Esempi Utili:</B></I></H3>
+Questi esempi sono pensati per essere eseguiti su un processore x86-64, quindi a 64 bit, ed un sistema operativo GNU Linux come la distribuzione LUbuntu 20.04.03 come quello delle macchine virtuali personalizzate che usate in laboratorio. Occorre avere installato il compilatore gcc ed i pacchetti lib32gcc-10-dev lib32gcc1 libc6-dev-i386 linux-libc-dev:i386 per poter utilizzare il flag -m32
+
+<H5>
+<B> Esempi di chiamata di Interrupt software in assembly per x86-64 (ma a 32 bit) </B> - print ed exit 
+<BR>
+<BR>
+
+
+
+<B> Usando 'as' e 'ld' direttamente senza 'gcc', con inizio codice in '_start' </B>
+<BR>
+
+
+        <A HREF = "INTERRUPT_SOFTWARE/Makefile_ld">Makefile_ld</A>
+	 
+        <A HREF = "INTERRUPT_SOFTWARE/print.s">print.s</A>
+<BR>
+
+<B> Usando 'gcc' escludendo le librerie standard, con inizio codice in '_start'</B>
+<BR>
+
+
+        <A HREF = "INTERRUPT_SOFTWARE/Makefile_gcc-nostdlib">Makefile_gcc-nostdlib</A>
+	 
+        <A HREF = "INTERRUPT_SOFTWARE/print.s">print.s</A>
+<BR>
+
+<B> Usando 'gcc' e le librerie standard, con inizio codice in 'main'</B>
+<BR>
+
+
+        <A HREF = "INTERRUPT_SOFTWARE/Makefile_usa_main">Makefile_usa_main</A>
+	 
+        <A HREF = "INTERRUPT_SOFTWARE/print_usa_main.s">print_usa_main.s</A>
+<BR>
+
+<B> Usando 'gcc' e le librerie standard, con inizio codice in 'main',<BR>
+
+anche chiamando da assembly le funzioni di libreria C </B>
+<BR>
+
+
+        <A HREF = "INTERRUPT_SOFTWARE/Makefile_usa_printf">Makefile_usa_printf</A>
+	 
+        <A HREF = "INTERRUPT_SOFTWARE/print_usa_printf.s">print_usa_printf.s</A>
+<BR>
+
+
+Notare che per usare printf NON POSSO ESCLUDERE le librerie standard C<BR>
+
+
+cio&eacute; non posso usare il flag di linking -nostdlib<BR>
+
+
+Verificare che il linking fallisce usando il flag -nostdlib<BR>
+
+
+        <A HREF = "INTERRUPT_SOFTWARE/Makefile_Errore_usa_printf_gcc-nostdlib">Makefile_Errore_usa_printf_gcc-nostdlib</A>
+<BR>
+<BR>
+<BR>
+
+
+  <B>Chiamata di system call in assembly a 64 bit per x86-64 (64 bit) </B> - print ed exit 
+<BR>
+
+
+Premessa: <BR>
+
+L'istruzione '<B>int 0x80</B>' ha dei limiti in ambiente a 64 bit.<BR>
+
+Occorre <B>sostituirla</B> con l'istruzione <B>syscall<\B>.
+<BR>
+
+        <A HREF = "Sostituire_int_0x80_con_syscall___in_architetture_a_64_bit.pdf">Sostituire_int_0x80_con_syscall___in_architetture_a_64_bit.pdf</A>
+<BR>
+<BR>
+
+<B> Chiamare syscall usando 'gcc' e librerie standard, con inizio codice in 'main'</B>
+<BR>
+
+anche chiamando da assembly le funzioni di libreria C </B>
+<BR>
+
+
+        <A HREF = "INTERRUPT_SOFTWARE/Makefile64_usa_printf">Makefile64_usa_printf</A>
+	 
+        <A HREF = "INTERRUPT_SOFTWARE/print64_usa_printf.s">print64_usa_printf.s</A>
+<BR>
+</H5>
+
+</BODY>
+</HTML>
+
+

@@ -1,0 +1,34 @@
+all:	014_Funivia.tgz 015_Staffetta.tgz 016_PiantarePali.tgz 017_Attacchini.tgz 018_Megapizze.tgz 019_Conigli.tgz 020_Alieni.tgz
+
+014_Funivia.tgz:
+	rm -f 014_Funivia.tgz
+	tar czf 014_Funivia.tgz 2017_01_09__PUBBLICATO_es36_funiviasemplice/ 2017_01_09__PUBBLICATO_es37_funiviacomplicato/ 2017_01_09__PUBBLICATO_es38_int/
+
+015_Staffetta.tgz:
+	rm -f 015_Staffetta.tgz
+	tar czf 015_Staffetta.tgz 2017_01_09__PUBBLICATO_es39_staffettasemplice/ 2017_01_09__PUBBLICATO_es40_staffettacomplicato/ 2017_01_09__PUBBLICATO_es41_cercarecente/
+
+016_PiantarePali.tgz:
+	rm -f 016_PiantarePali.tgz
+	tar czf  016_PiantarePali.tgz 2017_01_09__PUBBLICATO_es42_piantarepalisemplice/ 2017_01_09__PUBBLICATO_es43_piantarepalicomplicato/piantarepalicomplicato.c 2017_01_09__PUBBLICATO_es44_car_ultimariga/car_ultimariga.sh
+
+017_Attacchini.tgz:
+	rm -f 017_Attacchini.tgz
+	tar czf 017_Attacchini.tgz 2017_02_06__PUBBLICATO_es45_attacchini_con_timer_semplice/ 2017_02_06__PUBBLICATO_es46_attacchinisincroni_complicato/ 2017_02_06__PUBBLICATO_es47_ultimerighe/
+
+018_Megapizze.tgz:
+	rm -f 018_Megapizze.tgz
+	tar czf 018_Megapizze.tgz 2017_02_06__PUBBLICATO_es48_megapizze_semplice/ 2017_02_06__PUBBLICATO_es49_megapizze_complicato/ 2017_02_06__PUBBLICATO_es50_selezionarighe/
+
+019_Conigli.tgz:
+	rm -f 019_Conigli.tgz
+	tar czf 019_Conigli.tgz 2017_02_20__PUBBLICATO_es51_avvisa_semplice/ 2017_02_20__PUBBLICATO_es52_conigli_complicato/ 2017_02_20__PUBBLICATO_es53_cercaemail/
+
+020_Alieni.tgz:
+	rm -f 020_Alieni.tgz
+	tar czf 020_Alieni.tgz 2017_02_20__PUBBLICATO_es54_notifica_semplice/ 2017_02_20__PUBBLICATO_es55_alieni_complicato/ 2017_02_20__PUBBLICATO_es56_cercastudente/
+
+
+clean:
+	rm -i 014_Funivia.tgz 015_Staffetta.tgz 016_PiantarePali.tgz 017_Attacchini.tgz 018_Megapizze.tgz 019_Conigli.tgz 020_Alieni.tgz
+
