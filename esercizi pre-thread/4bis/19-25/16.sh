@@ -10,10 +10,10 @@ done
 
 for (( CONTATORE=0 ; CONTATORE<=$# ; CONTATORE=${CONTATORE}+1 )) ; do 
     (( VAR=${CONTATORE}*2 + 1 ))
-    STRINGA=${STRINGA}${!VAR}
+    STRINGA="${STRINGA}${!VAR}"
 done
 
-echo ${STRINGA}
+echo "${STRINGA}"
 
 # I: ciao come stai io sto bene tu tutto ok
 # O: comeiobenetuttociaostaistotuok
