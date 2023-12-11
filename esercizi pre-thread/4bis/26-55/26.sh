@@ -1,0 +1,1 @@
+echo "ciao" 1>&2 # ho ridirezionato il file descriptor 1 nel file descriptor 2 per la durata del comando echo
