@@ -9,3 +9,5 @@ while read RIGA ; do
     echo "${RESULT}"
     fi
 done
+
+# si poteva saltare tutta sta roba perché tanto grep va a righe già lui da solo con l'input che gli viene dato
