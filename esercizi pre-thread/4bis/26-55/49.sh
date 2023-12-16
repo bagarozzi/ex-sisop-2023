@@ -1,0 +1,1 @@
+while read RIGA ; do echo "${RIGA}" | wc -c ; done
