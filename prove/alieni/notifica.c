@@ -1,3 +1,7 @@
+/*
+    SCHEMA 10 PRODUTTORI 1 CONSUMATORE
+*/
+
 #include <unistd.h> 
 #include <stdlib.h> 
 #include <stdio.h> 
@@ -9,7 +13,7 @@
 
 /* variabili di stato e da proteggere */
 int tidDisponibile = 0;
-int bufferCondiviso;
+pthread_t bufferCondiviso;
 
 /* variabili per la sincronizzazione */
 pthread_mutex_t mutex;
@@ -22,19 +26,24 @@ void* notifica(void* arg){
     pthread_t th = pthread_self();
     printf("Thread %d spawned\n", pthread_self());
 
+    sleep(1);
+
     pthread_mutex_lock(&mutex);
-    pthread_cond_wait(&condThreadPuoScrivere, &mutex);
+    while(tidDisponibile != 0){
+        pthread_cond_wait(&condThreadPuoScrivere, &mutex);
+    }
 
     tidDisponibile = 1; 
     bufferCondiviso = th;
 
     printf("Th-%d: rendo disponibile il mio TID\n", pthread_self());
     pthread_cond_signal(&condBufferDisponibile);
+    pthread_mutex_unlock(&mutex);
 
     printf("Th-%d: ora creo un altro thread figlio\n", pthread_self());
     rc = pthread_create(&tid, NULL, notifica, NULL);
     if(rc){
-        printf("Problem in pthread_create() of thread %d", pthread_self());
+        printf("Problem in pthread_create() of thread %d\n", pthread_self());
         exit(-1);
     }
 
@@ -43,6 +52,7 @@ void* notifica(void* arg){
 
 int main(void){
     pthread_t vth[THREADSNUM];
+    pthread_t th;
     int i, rc;
 
     pthread_cond_init(&condBufferDisponibile, NULL);
@@ -57,14 +67,20 @@ int main(void){
             exit(-1);
         }
     }
-    pthread_mutex_lock(&mutex);
     while(1){
+        pthread_mutex_lock(&mutex);
         while(tidDisponibile == 0){
             pthread_cond_wait(&condBufferDisponibile, &mutex);
         }
-        printf("Main: ricevuto TID da %d, lo aspetto\n", bufferCondiviso);
-        pthread_join(bufferCondiviso, NULL);
+        th = bufferCondiviso;
         tidDisponibile = 0;
+        
+        printf("Main: ricevuto TID da %d, lo aspetto\n", th);       
+        pthread_cond_signal(&condThreadPuoScrivere);
+        pthread_mutex_unlock(&mutex);
+
+        pthread_join(th, NULL);
+        printf("Il main ha atteso correttaente il thread %d\n", th);
     }
 
     pthread_exit(NULL);
