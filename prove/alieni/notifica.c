@@ -59,8 +59,9 @@ int main(void){
     }
     pthread_mutex_lock(&mutex);
     while(1){
-        pthread_cond_signal(&condThreadPuoScrivere);
-        pthread_cond_wait(&condBufferDisponibile, &mutex);
+        while(tidDisponibile == 0){
+            pthread_cond_wait(&condBufferDisponibile, &mutex);
+        }
         printf("Main: ricevuto TID da %d, lo aspetto\n", bufferCondiviso);
         pthread_join(bufferCondiviso, NULL);
         tidDisponibile = 0;
